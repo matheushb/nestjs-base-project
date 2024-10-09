@@ -30,7 +30,7 @@ API simples entidade User com autenticação JWT, RBAC e Swagger.
 Clone o repositório da API utilizando o comando abaixo:
 
 ```bash
-git clone https://github.com/matheushb/uc-api.git
+git clone https://github.com/matheushb/nestjs-base-project.git
 ```
 
 Em seguida, entre no diretório do projeto:
