@@ -15,7 +15,7 @@ Simple base API for the User entity
 - Pagination
 - ORM (Prisma with PostgreSQL)
 - Tests
-- Filters (TODO)
+- Filtering (TODO)
 - EnvConfigService (TODO)
 - Dependency Updates (TODO)
 
