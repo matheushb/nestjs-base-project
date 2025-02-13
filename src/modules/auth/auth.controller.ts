@@ -12,8 +12,8 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { SigninDto } from './dtos/signin.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { CreateUserDto } from '../../modules/user/dtos/create-user.dto';
-import { UserService } from '../../modules/user/user.service';
+import { CreateUserDto } from '../user/dtos/create-user.dto';
+import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 import { Role } from '../user/entity/user.entity';
 
