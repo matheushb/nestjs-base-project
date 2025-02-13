@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { IUserRepository } from 'src/common/interfaces/user.repository.interface';
-import { paginateMeta } from '../../common/pagination/paginate-params';
-import { PrismaService } from '../../common/prisma/prisma.service';
 import { PrismaPaginationParams } from '../auth/decorators/pagination.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { PrismaService } from '@/common/prisma/prisma.service';
+import { IUserRepository } from '@/common/interfaces/user.repository.interface';
+import { paginateMeta } from '@/common/pagination/paginate-params';
 
 const USER_SELECT_FIELDS: Prisma.UserSelect = {
   id: true,

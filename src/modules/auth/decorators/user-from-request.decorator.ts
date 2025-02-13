@@ -1,5 +1,5 @@
+import { Role } from '@/modules/user/entity/user.entity';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Role } from '../../../modules/user/entity/user.entity';
 
 export type RequestUser = {
   email: string;

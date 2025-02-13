@@ -6,10 +6,10 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { BcryptService } from '../../common/bcrypt/bcrypt.service';
 import { PrismaPaginationParams } from '../auth/decorators/pagination.decorator';
 import { USER_PRISMA_REPOSITORY } from './user.repository';
-import { IUserRepository } from 'src/common/interfaces/user.repository.interface';
+import { IUserRepository } from '@/common/interfaces/user.repository.interface';
+import { BcryptService } from '@/common/bcrypt/bcrypt.service';
 
 @Injectable()
 export class UserService {

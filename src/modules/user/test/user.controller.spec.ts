@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { INestApplication } from '@nestjs/common';
-import { PrismaService } from '../../../common/prisma/prisma.service';
 import { UserModule } from '../user.module';
-import { BcryptService } from '../../../common/bcrypt/bcrypt.service';
 import { CreateUserDto } from '../dtos/create-user.dto';
-import appConfig from '../../../common/config/app-config';
-import { AuthModule } from '../../../modules/auth/auth.module';
 import { SigninDto } from 'src/modules/auth/dtos/signin.dto';
+import { PrismaService } from '@/common/prisma/prisma.service';
+import { AuthModule } from '@/modules/auth/auth.module';
+import { BcryptService } from '@/common/bcrypt/bcrypt.service';
+import appConfig from '@/common/config/app-config';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;

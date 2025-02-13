@@ -1,16 +1,7 @@
-import { PrismaPaginationParams } from '../../modules/auth/decorators/pagination.decorator';
-
-export type Paginate<E> = {
-  data: E[];
-  meta: {
-    total: number;
-    lastPage: number;
-    currentPage: number;
-    perPage: number;
-    next: boolean;
-    prev: boolean;
-  };
-};
+import {
+  Paginate,
+  PrismaPaginationParams,
+} from '@/modules/auth/decorators/pagination.decorator';
 
 export interface Repository<E> {
   create(entity: Partial<E>): Promise<E>;

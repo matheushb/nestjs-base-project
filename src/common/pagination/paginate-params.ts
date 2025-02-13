@@ -1,4 +1,4 @@
-import { PrismaPaginationParams } from '../../modules/auth/decorators/pagination.decorator';
+import { PrismaPaginationParams } from '@/modules/auth/decorators/pagination.decorator';
 
 export async function paginateMeta(
   total: number,

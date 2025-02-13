@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BcryptService } from '../../../common/bcrypt/bcrypt.service';
-import { PrismaService } from '../../../common/prisma/prisma.service';
-import { PrismaPaginationParams } from '../../../modules/auth/decorators/pagination.decorator';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { USER_PRISMA_REPOSITORY, UserRepository } from '../user.repository';
 import { UserService } from '../user.service';
+import { PrismaService } from '@/common/prisma/prisma.service';
+import { BcryptService } from '@/common/bcrypt/bcrypt.service';
+import { PrismaPaginationParams } from '@/modules/auth/decorators/pagination.decorator';
 
 describe('UserService', () => {
   let service: UserService;
