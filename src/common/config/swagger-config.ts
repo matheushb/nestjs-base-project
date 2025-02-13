@@ -13,5 +13,8 @@ export default function swaggerConfig(app: INestApplication<any>) {
     swaggerOptions: {
       persistAuthorization: true,
     },
+    customfavIcon: '/assets/favicon.ico',
+    customSiteTitle: 'NestJS Base API',
+    customCss: '.topbar { display: none }',
   });
 }
