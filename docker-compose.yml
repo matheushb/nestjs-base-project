@@ -1,25 +1,23 @@
-version: '3.8'
-
 services:
-  nest_db:
-    container_name: nest_db
+  base_nest_db:
+    container_name: base_nest_db
     image: postgres:16-alpine
     env_file:
       - .env
     ports:
       - 5402:5432
     volumes:
-      - nest_db:/var/lib/postgresql/data
-  test_db:
-    container_name: test_db
+      - base_nest_db:/var/lib/postgresql/data
+  base_test_db:
+    container_name: base_test_db
     image: postgres:16-alpine
     env_file:
       - .env.test
     ports:
       - 5403:5432
     volumes:
-      - test_db:/var/lib/postgresql/data
+      - base_test_db:/var/lib/postgresql/data
 
 volumes:
-  nest_db: {}
-  test_db: {}
+  base_nest_db: {}
+  base_test_db: {}
