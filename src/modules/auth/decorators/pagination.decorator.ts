@@ -5,6 +5,18 @@ import {
 } from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
 
+export type Paginate<E> = {
+  data: E[];
+  meta: {
+    total: number;
+    lastPage: number;
+    currentPage: number;
+    perPage: number;
+    next: boolean;
+    prev: boolean;
+  };
+};
+
 export type PaginationParams = {
   page: number;
   perPage: number;
