@@ -1,0 +1,41 @@
+name: Run Build & Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set timezone to Brazil (America/Sao_Paulo)
+        run: |
+          sudo ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+          echo "America/Sao_Paulo" | sudo tee /etc/timezone
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm run test
+        env:
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          PORT: : ${{ secrets.PORT }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+          BCRYPT_SALTS: ${{ secrets.BCRYPT_SALTS }}
