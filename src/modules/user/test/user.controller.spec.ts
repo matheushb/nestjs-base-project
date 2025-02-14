@@ -4,10 +4,10 @@ import { INestApplication } from '@nestjs/common';
 import { UserModule } from '../user.module';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { SigninDto } from 'src/modules/auth/dtos/signin.dto';
-import { PrismaService } from '@/common/prisma/prisma.service';
+import { PrismaService } from '@/infrastructure/prisma/prisma.service';
 import { AuthModule } from '@/modules/auth/auth.module';
 import { BcryptService } from '@/common/bcrypt/bcrypt.service';
-import appConfig from '@/common/config/app-config';
+import appConfig from '@/config/app-config';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;

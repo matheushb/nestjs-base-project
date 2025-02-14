@@ -1,10 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from '../dtos/create-user.dto';
-import { USER_PRISMA_REPOSITORY, UserRepository } from '../user.repository';
 import { UserService } from '../user.service';
-import { PrismaService } from '@/common/prisma/prisma.service';
+import { PrismaService } from '@/infrastructure/prisma/prisma.service';
 import { BcryptService } from '@/common/bcrypt/bcrypt.service';
-import { PrismaPaginationParams } from '@/modules/auth/decorators/pagination.decorator';
+import { PaginationParams } from '@/common/decorators/pagination/pagination.decorator';
+import {
+  USER_PRISMA_REPOSITORY,
+  UserRepository,
+} from '../repository/user-prisma.repository';
 
 describe('UserService', () => {
   let service: UserService;
@@ -59,9 +62,9 @@ describe('UserService', () => {
   });
 
   it('should find all users with pagination', async () => {
-    const paginationParams: PrismaPaginationParams = {
-      skip: 0,
-      take: 10,
+    const paginationParams: PaginationParams = {
+      page: 1,
+      perPage: 10,
     };
 
     const response = await service.findAll(paginationParams);
