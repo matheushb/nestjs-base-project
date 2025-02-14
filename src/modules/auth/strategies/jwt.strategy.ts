@@ -1,5 +1,5 @@
 import { EnvConfigService } from '@/common/environment/environment/env-config/env-config.service';
-import { Role } from '@/modules/user/entity/user.entity';
+import { Role } from '@/modules/user/enums/role.enum';
 import { UserService } from '@/modules/user/user.service';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
