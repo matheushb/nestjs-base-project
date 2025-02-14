@@ -31,7 +31,7 @@ export class UserRepository implements UserRepositoryInterface {
 
   async create(user: User) {
     const createdUser = await this.prismaService.user.create({
-      data: { ...user },
+      data: this.userMapper.mapFromEntity(user),
       select: USER_SELECT_FIELDS,
     });
 
@@ -74,7 +74,7 @@ export class UserRepository implements UserRepositoryInterface {
   async update(user: User) {
     const updatedUser = await this.prismaService.user.update({
       where: { id: user.id },
-      data: { ...user },
+      data: this.userMapper.mapFromEntity(user),
       select: USER_SELECT_FIELDS,
     });
 

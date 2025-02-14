@@ -1,4 +1,4 @@
-export interface Mapper<E, F> {
-  mapToEntity(entity: E): F;
-  mapFromEntity(externalEntity: F): E;
+export interface Mapper<T, E> {
+  mapFromEntity(entity: E): T;
+  mapToEntity(external: T): E;
 }

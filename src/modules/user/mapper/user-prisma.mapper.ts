@@ -4,10 +4,20 @@ import { SelectableUser, User } from '../entity/user.entity';
 import { UserMapper } from './user.mapper';
 
 @Injectable()
-export class UserPrismaMapper
-  implements UserMapper<PrismaUser, Partial<PrismaUser>>
-{
-  mapToEntity(user: User): PrismaUser {
+export class UserPrismaMapper implements UserMapper<PrismaUser> {
+  mapToEntity(externalUser: PrismaUser): User {
+    return {
+      id: externalUser.id,
+      name: externalUser.name,
+      email: externalUser.email,
+      role: externalUser.role,
+      password: externalUser.password,
+      created_at: externalUser.created_at,
+      updated_at: externalUser.updated_at,
+    };
+  }
+
+  mapFromEntity(user: User): PrismaUser {
     return {
       id: user.id,
       name: user.name,
@@ -16,18 +26,6 @@ export class UserPrismaMapper
       password: user.password,
       created_at: user.created_at,
       updated_at: user.updated_at,
-    };
-  }
-
-  mapFromEntity(externalEntity: PrismaUser): User {
-    return {
-      id: externalEntity.id,
-      name: externalEntity.name,
-      email: externalEntity.email,
-      role: externalEntity.role,
-      password: externalEntity.password,
-      created_at: externalEntity.created_at,
-      updated_at: externalEntity.updated_at,
     };
   }
 
