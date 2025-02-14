@@ -6,39 +6,41 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { PrismaPaginationParams } from '../auth/decorators/pagination.decorator';
-import { USER_PRISMA_REPOSITORY } from './user.repository';
-import { IUserRepository } from '@/common/interfaces/user.repository.interface';
 import { BcryptService } from '@/common/bcrypt/bcrypt.service';
+import { USER_PRISMA_REPOSITORY } from './repository/user-prisma.repository';
+import { UserRepositoryInterface } from './repository/user.repository.interface';
+import { User } from './entity/user.entity';
+import { UserFilterParams } from './dtos/find-all-user.dto';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject(USER_PRISMA_REPOSITORY)
-    private readonly userRepository: IUserRepository,
+    private readonly userRepository: UserRepositoryInterface,
     private readonly bcryptService: BcryptService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const userExists = !!(await this.findByEmail(createUserDto.email));
+    const userExists = await this.findByEmail(createUserDto.email);
 
     if (userExists) {
       throw new ConflictException('User already exists');
     }
 
-    createUserDto.password = await this.bcryptService.hash(
-      createUserDto.password,
-    );
+    const user = new User(createUserDto);
 
-    return this.userRepository.create(createUserDto);
+    user.password = await this.bcryptService.hash(user.password);
+
+    return await this.userRepository.create(user);
   }
 
-  async findAll(pagination: PrismaPaginationParams) {
+  async findAll(pagination: UserFilterParams) {
     return await this.userRepository.findAll(pagination);
   }
 
   async findOne(id: string) {
     const user = await this.userRepository.findOne(id);
+
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -47,23 +49,30 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    await this.findOne(id);
+    const existingUser = await this.findOne(id);
 
-    if (updateUserDto.password) {
-      updateUserDto.password = await this.bcryptService.hash(
-        updateUserDto.password,
-      );
+    const user = new User({
+      id: existingUser.id,
+      name: updateUserDto.name ?? existingUser.name,
+      email: updateUserDto.email ?? existingUser.email,
+      password: updateUserDto.password ?? existingUser.password,
+      created_at: existingUser.created_at,
+      updated_at: new Date(),
+    });
+
+    if (user.password) {
+      user.password = await this.bcryptService.hash(user.password);
     }
 
-    return this.userRepository.update(id, updateUserDto);
+    return await this.userRepository.update(user);
   }
 
   async delete(id: string) {
     await this.findOne(id);
-    return this.userRepository.delete(id);
+    return await this.userRepository.delete(id);
   }
 
-  findByEmail(email: string) {
-    return this.userRepository.findByEmail(email);
+  async findByEmail(email: string) {
+    return await this.userRepository.findByEmail(email);
   }
 }

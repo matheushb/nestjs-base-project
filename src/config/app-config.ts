@@ -1,6 +1,6 @@
+import { HttpExceptionFilter } from '@/common/filters/http-exception.filter';
+import { PrismaClientExceptionFilter } from '@/common/filters/prisma-exception.filter';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { HttpExceptionFilter } from '../filters/http-exception.filter';
-import { PrismaClientExceptionFilter } from '../filters/prisma-exception.filter';
 
 export default function appConfig(app: INestApplication<any>) {
   app.useGlobalPipes(

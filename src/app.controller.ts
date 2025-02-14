@@ -1,11 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+
+const route = '/health';
 
 @ApiTags('app')
-@Controller()
+@ApiOkResponse({ description: 'Health check', example: { status: 'ok' } })
+@Controller(route)
 export class AppController {
   @Get()
-  health(): string {
-    return 'ok';
+  health(): { status: string } {
+    return { status: 'ok' };
   }
 }

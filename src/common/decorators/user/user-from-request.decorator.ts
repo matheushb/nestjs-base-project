@@ -1,4 +1,4 @@
-import { Role } from '@/modules/user/entity/user.entity';
+import { Role } from '@/modules/user/enums/role.enum';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
 export type RequestUser = {

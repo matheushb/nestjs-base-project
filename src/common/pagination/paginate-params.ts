@@ -1,4 +1,18 @@
-import { PrismaPaginationParams } from '@/modules/auth/decorators/pagination.decorator';
+import { PaginationParams } from '../decorators/pagination/pagination.decorator';
+
+export type PrismaPaginationParams = {
+  skip: number;
+  take: number;
+};
+
+export function paginationParamsToPrismaParams(
+  paginationParams: PaginationParams,
+) {
+  return {
+    skip: (paginationParams.page - 1) * paginationParams.perPage,
+    take: paginationParams.perPage,
+  };
+}
 
 export async function paginateMeta(
   total: number,
