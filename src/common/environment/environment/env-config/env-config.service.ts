@@ -28,7 +28,7 @@ export class EnvConfigService {
   getJwtExpiresIn(): string {
     return this.getEnvVariable<string>('JWT_EXPIRES_IN');
   }
-  getBcryptSalts(): string {
-    return this.getEnvVariable<string>('BCRYPT_SALTS');
+  getBcryptSalts(): number {
+    return Number(this.getEnvVariable('BCRYPT_SALTS'));
   }
 }
