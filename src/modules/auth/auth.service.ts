@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { RequestUser } from './decorators/user-from-request.decorator';
+import { RequestUser } from '@/common/decorators/user/user-from-request.decorator';
 import { UserService } from '../user/user.service';
 import { BcryptService } from '@/common/bcrypt/bcrypt.service';
 
