@@ -1,13 +1,14 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Role } from '../enums/role.enum';
+import { EntityProps } from '@/common/types/entity-props.types';
 
 export class User {
   @ApiProperty({ example: '8062c43b-339f-4ce6-a5b7-902768c709ae' })
   id: string;
 
   @ApiProperty({ example: 'John Doe' })
-  name: string;
+  name?: string;
 
   @ApiProperty({ example: 'johndoe@mail.com' })
   email: string;
@@ -24,7 +25,11 @@ export class User {
   @ApiProperty({ example: new Date() })
   updated_at: Date;
 
-  constructor(user: Partial<User>) {
+  constructor(
+    user: Omit<EntityProps<typeof User>, 'role'> & {
+      role?: Role;
+    },
+  ) {
     this.id = user.id ?? crypto.randomUUID();
     this.name = user.name;
     this.email = user.email;
