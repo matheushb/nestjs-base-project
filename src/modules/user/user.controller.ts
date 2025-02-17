@@ -46,7 +46,7 @@ const routeId = '/users/:id';
 
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(Role.ADMIN, Role.USER) // Deixei a role user aqui pra facilitar o uso da Api, porém, o ideal é que USER não tenha acesso a esses endpoints
+@Roles(Role.USER, Role.ADMIN) // Deixei a role user aqui pra facilitar o uso da Api, porém, o ideal é que USER não tenha acesso a esses endpoints
 @ApiTags('users')
 @Controller({ path: route, version: '1' })
 export class UserController {
@@ -57,8 +57,8 @@ export class UserController {
   @ApiUnauthorizedExceptionReponse(route)
   @ApiForbiddenExceptionReponse(route)
   @ApiBadRequestExceptionReponse(route)
-  async create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async create(@Body() body: CreateUserDto) {
+    return this.userService.create(body);
   }
 
   @Get()
@@ -83,8 +83,8 @@ export class UserController {
   @ApiUnauthorizedExceptionReponse(routeId)
   @ApiForbiddenExceptionReponse(routeId)
   @ApiNotFoundExceptionReponse(routeId, 'User')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  async update(@Param('id') id: string, @Body() body: UpdateUserDto) {
+    return this.userService.update(id, body);
   }
 
   @NoRoles()
@@ -94,9 +94,9 @@ export class UserController {
   @ApiUnauthorizedExceptionReponse(route)
   async updateMe(
     @UserFromRequest() user: RequestUser,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() body: UpdateUserDto,
   ) {
-    return this.userService.update(user.id, updateUserDto);
+    return this.userService.update(user.id, body);
   }
 
   @Delete(':id')
