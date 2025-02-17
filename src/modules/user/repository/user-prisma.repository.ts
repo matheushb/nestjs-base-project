@@ -20,10 +20,8 @@ const USER_SELECT_FIELDS: Prisma.UserSelect = {
   updated_at: true,
 };
 
-export const USER_PRISMA_REPOSITORY = 'user_repository';
-
 @Injectable()
-export class UserRepository implements UserRepositoryInterface {
+export class UserPrismaRepository implements UserRepositoryInterface {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly userMapper: UserPrismaMapper,

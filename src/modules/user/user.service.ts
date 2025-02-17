@@ -7,27 +7,29 @@ import {
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { BcryptService } from '@/common/bcrypt/bcrypt.service';
-import { USER_PRISMA_REPOSITORY } from './repository/user-prisma.repository';
-import { UserRepositoryInterface } from './repository/user.repository.interface';
+import {
+  USER_REPOSITORY,
+  UserRepositoryInterface,
+} from './repository/user.repository.interface';
 import { User } from './entity/user.entity';
 import { UserFilterParams } from './dtos/find-all-user.dto';
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(USER_PRISMA_REPOSITORY)
+    @Inject(USER_REPOSITORY)
     private readonly userRepository: UserRepositoryInterface,
     private readonly bcryptService: BcryptService,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
-    const userExists = await this.findByEmail(createUserDto.email);
+  async create(body: CreateUserDto) {
+    const userExists = await this.findByEmail(body.email);
 
     if (userExists) {
       throw new ConflictException('User already exists');
     }
 
-    const user = new User(createUserDto);
+    const user = new User(body);
 
     user.password = await this.bcryptService.hash(user.password);
 
@@ -48,23 +50,25 @@ export class UserService {
     return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    const existingUser = await this.findOne(id);
+  async update(id: string, body: UpdateUserDto) {
+    const user = await this.findOne(id);
 
-    const user = new User({
-      id: existingUser.id,
-      name: updateUserDto.name ?? existingUser.name,
-      email: updateUserDto.email ?? existingUser.email,
-      password: updateUserDto.password ?? existingUser.password,
-      created_at: existingUser.created_at,
+    const createdUser = new User({
+      id: user.id,
+      name: body.name ?? user.name,
+      email: body.email ?? user.email,
+      password: body.password ?? user.password,
+      created_at: user.created_at,
       updated_at: new Date(),
     });
 
-    if (user.password) {
-      user.password = await this.bcryptService.hash(user.password);
+    if (createdUser.password) {
+      createdUser.password = await this.bcryptService.hash(
+        createdUser.password,
+      );
     }
 
-    return await this.userRepository.update(user);
+    return await this.userRepository.update(createdUser);
   }
 
   async delete(id: string) {
