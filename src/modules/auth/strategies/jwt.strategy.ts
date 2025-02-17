@@ -1,7 +1,7 @@
 import { EnvConfigService } from '@/common/environment/environment/env-config/env-config.service';
 import { Role } from '@/modules/user/enums/role.enum';
 import { UserService } from '@/modules/user/user.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt } from 'passport-jwt';
 import { Strategy } from 'passport-jwt';
@@ -26,8 +26,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     iat: number;
     exp: number;
   }) {
-    await this.userService.findOne(payload.sub);
+    const user = await this.userService.findByEmail(payload.email);
 
-    return { id: payload.sub, email: payload.email, role: payload.role };
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return { id: user.id, email: user.email, role: user.role };
   }
 }
